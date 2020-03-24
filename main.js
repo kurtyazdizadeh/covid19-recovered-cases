@@ -8,3 +8,5 @@ var stateList = new StateList(stateListEl);
 var covidStats = new CovidStats(statsEl);
 
 var app = new App(geoChart, stateList, covidStats);
+
+app.start();

@@ -4,4 +4,7 @@ class App {
     this.stateList = stateList;
     this.covidStats = covidStats;
   }
+  start() {
+    this.geoChart.loadGoogleChart();
+  }
 }
