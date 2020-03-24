@@ -1,5 +1,7 @@
 class App {
-  constructor() {
-
+  constructor(geoChart, stateList, covidStats) {
+    this.geoChart = geoChart;
+    this.stateList = stateList;
+    this.covidStats = covidStats;
   }
 }
