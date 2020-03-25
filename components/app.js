@@ -8,7 +8,7 @@ class App {
     this.stateList = stateList;
     this.covidStats = covidStats;
 
-    this.stateList = {
+    this.states = {
       'US-AL': 'Alabama',
       'US-AK': 'Alaska',
       'US-AZ': 'Arizona',
@@ -64,6 +64,7 @@ class App {
   }
   start() {
     this.getCovidStats();
+    this.stateList.renderStates(this.states);
   }
   getCovidStats(){
     $.ajax({
@@ -79,7 +80,7 @@ class App {
   }
   handleGetCovidStatsSuccess(data){
     this.covidStats = data;
-    this.geoChart.loadGoogleChart(this.stateList, this.covidStats)
+    this.geoChart.loadGoogleChart(this.states, this.covidStats)
   }
   handleGetCovidStatsError(error){
     console.error(error);
