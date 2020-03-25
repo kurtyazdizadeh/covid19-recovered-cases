@@ -10,7 +10,7 @@ class StateList {
     for (var state in states) {
       var listItem = document.createElement('button');
       listItem.className = 'list-group-item list-group-item-action';
-      listItem.textContent = states[state];
+      listItem.textContent = states[state].name;
 
       listItem.addEventListener('click', () => {
         var prevActive = document.querySelector('.active');

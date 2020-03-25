@@ -12,56 +12,56 @@ class App {
     this.covidStats = covidStats;
 
     this.states = {
-      'US-AL': 'Alabama',
-      'US-AK': 'Alaska',
-      'US-AZ': 'Arizona',
-      'US-AR': 'Arkansas',
-      'US-CA': 'California',
-      'US-CO': 'Colorado',
-      'US-CT': 'Connecticut',
-      'US-DE': 'Delaware',
-      'US-FL': 'Florida',
-      'US-GA': 'Georgia',
-      'US-HI': 'Hawaii',
-      'US-ID': 'Idaho',
-      'US-IL': 'Illinois',
-      'US-IN': 'Indiana',
-      'US-IA': 'Iowa',
-      'US-KS': 'Kansas',
-      'US-KY': 'Kentucky',
-      'US-LA': 'Louisiana',
-      'US-ME': 'Maine',
-      'US-MD': 'Maryland',
-      'US-MA': 'Massachusetts',
-      'US-MI': 'Michigan',
-      'US-MN': 'Minnesota',
-      'US-MS': 'Mississippi',
-      'US-MO': 'Missouri',
-      'US-MT': 'Montana',
-      'US-NE': 'Nebraska',
-      'US-NV': 'Nevada',
-      'US-NH': 'New Hampshire',
-      'US-NJ': 'New Jersey',
-      'US-NM': 'New Mexico',
-      'US-NY': 'New York',
-      'US-NC': 'North Carolina',
-      'US-ND': 'North Dakota',
-      'US-OH': 'Ohio',
-      'US-OK': 'Oklahoma',
-      'US-OR': 'Oregon',
-      'US-PA': 'Pennsylvania',
-      'US-RI': 'Rhode Island',
-      'US-SC': 'South Carolina',
-      'US-SD': 'South Dakota',
-      'US-TN': 'Tennessee',
-      'US-TX': 'Texas',
-      'US-UT': 'Utah',
-      'US-VT': 'Vermont',
-      'US-VA': 'Virginia',
-      'US-WA': 'Washington',
-      'US-WV': 'West Virginia',
-      'US-WI': 'Wisconsin',
-      'US-WY': 'Wyoming'
+      'US-AL': {name: 'Alabama'},
+      'US-AK': {name: 'Alaska'},
+      'US-AZ': {name: 'Arizona'},
+      'US-AR': {name: 'Arkansas'},
+      'US-CA': {name: 'California'},
+      'US-CO': {name: 'Colorado'},
+      'US-CT': {name: 'Connecticut'},
+      'US-DE': {name: 'Delaware'},
+      'US-FL': {name: 'Florida'},
+      'US-GA': {name: 'Georgia'},
+      'US-HI': {name: 'Hawaii'},
+      'US-ID': {name: 'Idaho'},
+      'US-IL': {name: 'Illinois'},
+      'US-IN': {name: 'Indiana'},
+      'US-IA': {name: 'Iowa'},
+      'US-KS': {name: 'Kansas'},
+      'US-KY': {name: 'Kentucky'},
+      'US-LA': {name: 'Louisiana'},
+      'US-ME': {name: 'Maine'},
+      'US-MD': {name: 'Maryland'},
+      'US-MA': {name: 'Massachusetts'},
+      'US-MI': {name: 'Michigan'},
+      'US-MN': {name: 'Minnesota'},
+      'US-MS': {name: 'Mississippi'},
+      'US-MO': {name: 'Missouri'},
+      'US-MT': {name: 'Montana'},
+      'US-NE': {name: 'Nebraska'},
+      'US-NV': {name: 'Nevada'},
+      'US-NH': {name: 'New Hampshire'},
+      'US-NJ': {name: 'New Jersey'},
+      'US-NM': {name: 'New Mexico'},
+      'US-NY': {name: 'New York'},
+      'US-NC': {name: 'North Carolina'},
+      'US-ND': {name: 'North Dakota'},
+      'US-OH': {name: 'Ohio'},
+      'US-OK': {name: 'Oklahoma'},
+      'US-OR': {name: 'Oregon'},
+      'US-PA': {name: 'Pennsylvania'},
+      'US-RI': {name: 'Rhode Island'},
+      'US-SC': {name: 'South Carolina'},
+      'US-SD': {name: 'South Dakota'},
+      'US-TN': {name: 'Tennessee'},
+      'US-TX': {name: 'Texas'},
+      'US-UT': {name: 'Utah'},
+      'US-VT': {name: 'Vermont'},
+      'US-VA': {name: 'Virginia'},
+      'US-WA': {name: 'Washington'},
+      'US-WV': {name: 'West Virginia'},
+      'US-WI': {name: 'Wisconsin'},
+      'US-WY': {name: 'Wyoming'}
     }
 
     this.countries = [
@@ -318,7 +318,6 @@ class App {
     ];
 
     this.covidData = null;
-    this.stateDetail = null;
   }
   start() {
     this.stateList.onStateClick(this.getStateData);
@@ -347,10 +346,12 @@ class App {
     console.error(error);
   }
   getStateData(state){
-    function getKeyByValue(object, value) {
-      return Object.keys(object).find(key => object[key] === value);
+    for (var keys in this.states) {
+      if (this.states[keys]["name"] === state) {
+        var stateCode = keys;
+      }
     }
-    var stateCode = getKeyByValue(this.states, state);
+
 
     $.ajax({
       method: "GET",
@@ -364,8 +365,10 @@ class App {
       .fail(this.handleGetStateDataError);
   }
   handleGetStateDataSuccess(data){
-    console.log(data);
-    this.stateData = data;
+    var stateCode = data.location.isoCode;
+    this.states[stateCode].data = data;
+
+
   }
   handleGetStateDataError(error){
     console.error(error);

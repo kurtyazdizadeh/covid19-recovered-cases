@@ -19,9 +19,9 @@ class GeoChart {
       for(var i = 0; i < covidData.stats.breakdowns.length; i++){
         if (
           state === covidData.stats.breakdowns[i].location.isoCode ||
-          states[state] === covidData.stats.breakdowns[i].location.provinceOrState
+          states[state].name === covidData.stats.breakdowns[i].location.provinceOrState
         ) {
-            stateArray.push([states[state], covidData.stats.breakdowns[i].totalRecoveredCases])
+            stateArray.push([states[state].name, covidData.stats.breakdowns[i].totalRecoveredCases])
           }
       }
     }
