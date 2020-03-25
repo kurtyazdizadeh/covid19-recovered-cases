@@ -40,7 +40,7 @@ class GeoChart {
       var selection = chart.getSelection();
       var state = "";
       if (selection.length > 0) {
-        state = data.getValue(selection[0].row,0)
+        state = chartData.getValue(selection[0].row,0)
       }
       console.log('clicked from map', state);
     })

@@ -333,7 +333,7 @@ class App {
   handleGetCovidStatsSuccess(data){
     this.covidData = data;
     this.geoChart.loadGoogleChart(this.states, this.covidData);
-    this.covidStats.updateLastUpdatedDate(this.covidData);
+    this.covidStats.renderStats(this.covidData);
   }
   handleGetCovidStatsError(error){
     console.error(error);

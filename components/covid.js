@@ -5,9 +5,15 @@ class CovidStats {
   constructor(statsElement) {
     this.statsElement = statsElement;
   }
-  updateLastUpdatedDate(covidData) {
+  renderStats(covidData) {
     var lastUpdatedDateEl = this.statsElement.querySelector("#lastUpdatedDate");
     var date = new Date(covidData.updatedDateTime).toLocaleString();
     lastUpdatedDateEl.textContent = date;
+
+    var recentlyRecoveredEl = this.statsElement.querySelector("#recentlyRecovered");
+    recentlyRecoveredEl.textContent = covidData.stats.newlyRecoveredCases;
+
+    var totalRecoveredEl = this.statsElement.querySelector("#totalRecovered");
+    totalRecoveredEl.textContent = covidData.stats.totalRecoveredCases;
   }
 }
