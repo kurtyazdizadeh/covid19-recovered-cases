@@ -19,6 +19,7 @@ class StateList {
         if (states[state].name === covidData.stats.breakdowns[i].location.proviceOrState ||
             state === covidData.stats.breakdowns[i].location.isoCode
             ) {
+              if (covidData.stats.breakdowns[i].newlyRecoveredCases > 0)
               badge.textContent = covidData.stats.breakdowns[i].newlyRecoveredCases;
             }
       }
