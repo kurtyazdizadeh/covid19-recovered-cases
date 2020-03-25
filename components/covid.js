@@ -15,5 +15,12 @@ class CovidStats {
 
     var totalRecoveredEl = this.statsElement.querySelector("#totalRecovered");
     totalRecoveredEl.textContent = covidData.stats.totalRecoveredCases;
+
+    var selectedRegionEl = this.statsElement.querySelector("#selectedRegion");
+    if (covidData.location.provinceOrState !== null) {
+      selectedRegionEl.textContent = covidData.location.provinceOrState;
+    } else {
+      selectedRegionEl.textContent = "USA (Entire Country)";
+    }
   }
 }

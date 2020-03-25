@@ -63,14 +63,22 @@ class GeoChart {
       var peopleRecovered = index.totalRecoveredCases;
 
       if (peopleRecovered > 0){
-        array.push([latitude, longitude, county, peopleRecovered]);
+        array.push([latitude, longitude, county+" County", peopleRecovered]);
       }
     }
 
     if (array.length < 2){
-      console.log('not enough data to display on page');
-      return;
+      array.push(
+        [
+          stateData.location.lat,
+          stateData.location.long,
+          stateData.location.provinceOrState,
+          stateData.stats.totalRecoveredCases
+        ]
+      );
     }
+
+    console.log(array);
 
     var chartData = google.visualization.arrayToDataTable(array);
     var options = {
