@@ -3,18 +3,15 @@ var googleMaps_APIKey = 'AIzaSyDhYugfpMscV09jwbTry1YKDUNGhtfh9PI';
 class GeoChart {
   constructor(mapElement) {
     this.drawMap = this.drawMap.bind(this);
-    // this.drawStateMap = this.drawStateMap(this); <-- errors out
 
     this.mapElement = mapElement;
     this.getStateData = null;
+    this.chart = null;
   }
   loadGoogleChart(states, covidData) {
     google.charts.load('current', { packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
     google.charts.setOnLoadCallback(() => {
       this.drawMap(states, covidData)
-    });
-    google.charts.setOnLoadCallback(() => {
-      this.drawStateMap(stateData)
     });
   }
   drawMap(states, covidData) {
@@ -34,15 +31,15 @@ class GeoChart {
     var chartData = google.visualization.arrayToDataTable(stateArray);
     var options = {
       region: 'US',
-      resolution: 'provinces', //to show state borders
+      resolution: 'provinces',
       enableRegionInteractivity: true
     };
-    var chart = new google.visualization.GeoChart(document.getElementById('map'));
-    chart.draw(chartData, options);
+    this.chart = new google.visualization.GeoChart(document.getElementById('map'));
+    this.chart.draw(chartData, options);
 
     //event listener to grab the name of the state user clicks on the chart
-    google.visualization.events.addListener(chart, 'select', () => {
-      var selection = chart.getSelection();
+    google.visualization.events.addListener(this.chart, 'select', () => {
+      var selection = this.chart.getSelection();
       var state = "";
       if (selection.length > 0) {
         state = chartData.getValue(selection[0].row,0)
@@ -82,7 +79,15 @@ class GeoChart {
       displayMode: 'markers'
     }
 
-    var chart = new google.visualization.GeoChart(document.getElementById('map2'));
+    var mapEl = document.getElementById('map');
+    var chart = new google.visualization.GeoChart(mapEl);
     chart.draw(chartData, options);
+
+    var backButton = document.createElement('button');
+    backButton.textContent = "Back to US Map";
+    backButton.className = "btn btn-danger position-absolute back-button";
+
+    mapEl.appendChild(backButton);
+
   }
 }
