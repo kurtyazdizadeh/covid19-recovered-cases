@@ -3,6 +3,8 @@ var googleMaps_APIKey = 'AIzaSyDhYugfpMscV09jwbTry1YKDUNGhtfh9PI';
 class GeoChart {
   constructor(mapElement) {
     this.drawMap = this.drawMap.bind(this);
+    // this.drawStateMap = this.drawStateMap(this); <-- errors out
+
     this.mapElement = mapElement;
     this.getStateData = null;
   }
@@ -10,6 +12,9 @@ class GeoChart {
     google.charts.load('current', { packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
     google.charts.setOnLoadCallback(() => {
       this.drawMap(states, covidData)
+    });
+    google.charts.setOnLoadCallback(() => {
+      this.drawStateMap(stateData)
     });
   }
   drawMap(states, covidData) {
@@ -47,5 +52,37 @@ class GeoChart {
   }
   onStateClick(getStateData){
     this.getStateData = getStateData;
+  }
+  drawStateMap(stateData) {
+    var array = [
+      ['Latitude', 'Longitude', 'County', 'People Recovered'],
+    ];
+
+    for (var i = 0; i < stateData.stats.breakdowns.length; i++){
+      var index = stateData.stats.breakdowns[i];
+      var longitude = index.location.long;
+      var latitude = index.location.lat;
+      var county = index.location.county;
+      var peopleRecovered = index.totalRecoveredCases;
+
+      if (peopleRecovered > 0){
+        array.push([latitude, longitude, county, peopleRecovered]);
+      }
+    }
+
+    if (array.length < 2){
+      console.log('not enough data to display on page');
+      return;
+    }
+
+    var chartData = google.visualization.arrayToDataTable(array);
+    var options = {
+      region: stateData.location.isoCode,
+      resolution: 'provinces',
+      displayMode: 'markers'
+    }
+
+    var chart = new google.visualization.GeoChart(document.getElementById('map2'));
+    chart.draw(chartData, options);
   }
 }

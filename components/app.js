@@ -346,14 +346,14 @@ class App {
     console.error(error);
   }
   getStateData(state){
-    for (var keys in this.states) {
-      if (this.states[keys]["name"] === state) {
-        var stateCode = keys;
+    for (var key in this.states) {
+      if (this.states[key]["name"] === state) {
+        var stateCode = key;
       }
     }
 
     if (this.states[stateCode].hasOwnProperty('data')){
-      //METHOD repaint state map with markers
+      this.geoChart.drawStateMap(this.states[stateCode].data);
       return; //avoid ajax call
     }
 
@@ -376,7 +376,7 @@ class App {
     this.states[stateCode].data = data;
 
     //METHOD repaint state map with markers
-
+    this.geoChart.drawStateMap(this.states[stateCode].data);
   }
   handleGetStateDataError(error){
     console.error(error);

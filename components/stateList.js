@@ -18,10 +18,10 @@ class StateList {
       for (var i = 0; i < covidData.stats.breakdowns.length; i++){
         if (states[state].name === covidData.stats.breakdowns[i].location.proviceOrState ||
             state === covidData.stats.breakdowns[i].location.isoCode
-            ) {
-              if (covidData.stats.breakdowns[i].newlyRecoveredCases > 0)
-              badge.textContent = covidData.stats.breakdowns[i].newlyRecoveredCases;
-            }
+        ) {
+          if (covidData.stats.breakdowns[i].newlyRecoveredCases > 0)
+          badge.textContent = covidData.stats.breakdowns[i].newlyRecoveredCases;
+        }
       }
       listItem.appendChild(badge);
 
@@ -31,7 +31,7 @@ class StateList {
           prevActive.classList.remove('active');
         }
         event.target.classList.add('active');
-        this.getStateData(event.target.textContent);
+        this.getStateData(event.target.childNodes[0].wholeText);
       })
       this.list.appendChild(listItem);
     }
