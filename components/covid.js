@@ -7,24 +7,3 @@ class CovidStats {
   }
 
 }
-
-
-
-// $.ajax({
-//   type: "GET",
-//   url: "https://api.smartable.ai/coronavirus/stats/US",
-
-//   // Request headers
-//   beforeSend: function (xhrObj) {
-//     xhrObj.setRequestHeader("Cache-Control", "no-cache");
-//     xhrObj.setRequestHeader("Subscription-Key", "79badf971fec458f9e3012fe0a6aedc0");
-//   },
-// })
-//   .done(function (data) {
-//     alert("success");
-//     console.log("COVID-19 data", data);
-//   })
-//   .fail(function (error) {
-//     alert("error");
-//     console.log(error);
-//   });

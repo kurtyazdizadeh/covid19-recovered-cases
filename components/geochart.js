@@ -25,21 +25,21 @@ class GeoChart {
 
     for (var states in stateList){
       for(var i = 0; i < data.stats.breakdowns.length; i++){
-        if (states === data.stats.breakdowns[i].location.isoCode){
+        if (
+          states === data.stats.breakdowns[i].location.isoCode ||
+          stateList[states] === data.stats.breakdowns[i].location.provinceOrState
+        ) {
           stateArray.push([stateList[states], data.stats.breakdowns[i].totalRecoveredCases])
-        }
+          }
       }
     }
 
     var data = google.visualization.arrayToDataTable(stateArray);
-
     var options = {
       region: 'US',
       resolution: 'provinces' //metros does counties
     };
-
     var chart = new google.visualization.GeoChart(document.getElementById('map'));
-
     chart.draw(data, options);
   }
 }
