@@ -3,7 +3,6 @@ var googleMaps_APIKey = 'AIzaSyDhYugfpMscV09jwbTry1YKDUNGhtfh9PI';
 class GeoChart {
   constructor(mapElement) {
     this.drawMap = this.drawMap.bind(this);
-
     this.mapElement = mapElement;
   }
   loadGoogleChart(states, covidData) {
@@ -42,7 +41,10 @@ class GeoChart {
       if (selection.length > 0) {
         state = chartData.getValue(selection[0].row,0)
       }
-      console.log('clicked from map', state);
+      this.getStateData(state);
     })
+  }
+  onStateClick(getStateData){
+    this.getStateData = getStateData;
   }
 }

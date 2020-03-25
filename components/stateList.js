@@ -1,7 +1,6 @@
 class StateList {
   constructor(stateListElement) {
     this.renderStates = this.renderStates.bind(this);
-
     this.stateListElement = stateListElement;
   }
   renderStates(states){
@@ -12,17 +11,18 @@ class StateList {
       listItem.className = 'list-group-item list-group-item-action';
       listItem.textContent = states[state];
 
-      listItem.addEventListener('click', function(){
+      listItem.addEventListener('click', () => {
         var prevActive = document.querySelector('.active');
         if (prevActive !== null){
           prevActive.classList.remove('active');
         }
         event.target.classList.add('active');
-        console.log('clicked from list', event.target.textContent)
+        this.getStateData(event.target.textContent);
       });
-
       this.list.appendChild(listItem);
     }
   }
-
+  onStateClick(getStateData){
+    this.getStateData = getStateData;
+  }
 }

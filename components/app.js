@@ -4,6 +4,8 @@ class App {
     this.handleGetCovidStatsSuccess = this.handleGetCovidStatsSuccess.bind(this);
     this.getCovidStats = this.getCovidStats.bind(this);
 
+    this.getStateData = this.getStateData.bind(this);
+
     this.geoChart = geoChart;
     this.stateList = stateList;
     this.covidStats = covidStats;
@@ -315,6 +317,8 @@ class App {
 		];
   }
   start() {
+    this.stateList.onStateClick(this.getStateData);
+    this.geoChart.onStateClick(this.getStateData);
     this.getCovidStats();
     this.stateList.renderStates(this.states);
   }
@@ -337,5 +341,8 @@ class App {
   }
   handleGetCovidStatsError(error){
     console.error(error);
+  }
+  getStateData(state){
+    console.log("getStateData", state)
   }
 }
