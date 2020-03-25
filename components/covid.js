@@ -5,5 +5,9 @@ class CovidStats {
   constructor(statsElement) {
     this.statsElement = statsElement;
   }
-
+  updateLastUpdatedDate(covidData) {
+    var lastUpdatedDateEl = this.statsElement.querySelector("#lastUpdatedDate");
+    var date = new Date(covidData.updatedDateTime).toLocaleString();
+    lastUpdatedDateEl.textContent = date;
+  }
 }

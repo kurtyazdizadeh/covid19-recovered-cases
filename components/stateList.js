@@ -18,6 +18,7 @@ class StateList {
           prevActive.classList.remove('active');
         }
         event.target.classList.add('active');
+        console.log('clicked from list', event.target.textContent)
       });
 
       this.list.appendChild(listItem);

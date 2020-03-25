@@ -6,35 +6,34 @@ class GeoChart {
 
     this.mapElement = mapElement;
   }
-  loadGoogleChart(states, data) {
+  loadGoogleChart(states, covidData) {
     google.charts.load('current', { packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
     google.charts.setOnLoadCallback(() => {
-      this.drawMap(states, data)
+      this.drawMap(states, covidData)
     });
   }
-  drawMap(states, data) {
-    var stateArray = [
-      ['State', 'Persons Recovered']
-    ]
+  drawMap(states, covidData) {
+    var stateArray = [ ['State', 'Persons Recovered'] ];
+
     for (var state in states){
-      for(var i = 0; i < data.stats.breakdowns.length; i++){
+      for(var i = 0; i < covidData.stats.breakdowns.length; i++){
         if (
-          state === data.stats.breakdowns[i].location.isoCode ||
-          states[state] === data.stats.breakdowns[i].location.provinceOrState
+          state === covidData.stats.breakdowns[i].location.isoCode ||
+          states[state] === covidData.stats.breakdowns[i].location.provinceOrState
         ) {
-            stateArray.push([states[state], data.stats.breakdowns[i].totalRecoveredCases])
+            stateArray.push([states[state], covidData.stats.breakdowns[i].totalRecoveredCases])
           }
       }
     }
 
-    var data = google.visualization.arrayToDataTable(stateArray);
+    var chartData = google.visualization.arrayToDataTable(stateArray);
     var options = {
       region: 'US',
       resolution: 'provinces', //to show state borders
       enableRegionInteractivity: true
     };
     var chart = new google.visualization.GeoChart(document.getElementById('map'));
-    chart.draw(data, options);
+    chart.draw(chartData, options);
 
     //event listener to grab the name of the state user clicks on the chart
     google.visualization.events.addListener(chart, 'select', () => {
@@ -43,7 +42,7 @@ class GeoChart {
       if (selection.length > 0) {
         state = data.getValue(selection[0].row,0)
       }
-      console.log(state);
+      console.log('clicked from map', state);
     })
   }
 }
