@@ -17,7 +17,7 @@ class App {
       'US-CO': 'Colorado',
       'US-CT': 'Connecticut',
       'US-DE': 'Delaware',
-      'US-DC': 'District Of Columbia',
+      // 'US-DC': 'District Of Columbia',
       'US-FL': 'Florida',
       'US-GA': 'Georgia',
       'US-HI': 'Hawaii',
