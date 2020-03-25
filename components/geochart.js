@@ -4,6 +4,7 @@ class GeoChart {
   constructor(mapElement) {
     this.drawMap = this.drawMap.bind(this);
     this.mapElement = mapElement;
+    this.getStateData = null;
   }
   loadGoogleChart(states, covidData) {
     google.charts.load('current', { packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
@@ -40,8 +41,8 @@ class GeoChart {
       var state = "";
       if (selection.length > 0) {
         state = chartData.getValue(selection[0].row,0)
+        this.getStateData(state);
       }
-      this.getStateData(state);
     })
   }
   onStateClick(getStateData){

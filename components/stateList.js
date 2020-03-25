@@ -2,8 +2,9 @@ class StateList {
   constructor(stateListElement) {
     this.renderStates = this.renderStates.bind(this);
     this.stateListElement = stateListElement;
+    this.getStateData = null;
   }
-  renderStates(states){
+  renderStates (states) {
     this.list = document.querySelector('.state-list');
 
     for (var state in states) {
@@ -18,7 +19,7 @@ class StateList {
         }
         event.target.classList.add('active');
         this.getStateData(event.target.textContent);
-      });
+      })
       this.list.appendChild(listItem);
     }
   }

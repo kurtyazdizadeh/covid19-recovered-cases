@@ -3,7 +3,8 @@ class App {
     this.handleGetCovidStatsError = this.handleGetCovidStatsError.bind(this);
     this.handleGetCovidStatsSuccess = this.handleGetCovidStatsSuccess.bind(this);
     this.getCovidStats = this.getCovidStats.bind(this);
-
+    this.handleGetStateDataError = this.handleGetStateDataError.bind(this);
+    this.handleGetStateDataSuccess = this.handleGetStateDataSuccess.bind(this);
     this.getStateData = this.getStateData.bind(this);
 
     this.geoChart = geoChart;
@@ -314,7 +315,10 @@ class App {
       ['Yemen'],
       ['Zambia'],
       ['Zimbabwe']
-		];
+    ];
+
+    this.covidData = null;
+    this.stateDetail = null;
   }
   start() {
     this.stateList.onStateClick(this.getStateData);
@@ -343,6 +347,27 @@ class App {
     console.error(error);
   }
   getStateData(state){
-    console.log("getStateData", state)
+    function getKeyByValue(object, value) {
+      return Object.keys(object).find(key => object[key] === value);
+    }
+    var stateCode = getKeyByValue(this.states, state);
+
+    $.ajax({
+      method: "GET",
+      url: "https://api.smartable.ai/coronavirus/stats/"+stateCode,
+      beforeSend: function (xhrObj) {
+        xhrObj.setRequestHeader("Cache-Control", "no-cache");
+        xhrObj.setRequestHeader("Subscription-Key", covid19_APIKey);
+      },
+    })
+      .done(this.handleGetStateDataSuccess)
+      .fail(this.handleGetStateDataError);
+  }
+  handleGetStateDataSuccess(data){
+    console.log(data);
+    this.stateData = data;
+  }
+  handleGetStateDataError(error){
+    console.error(error);
   }
 }
