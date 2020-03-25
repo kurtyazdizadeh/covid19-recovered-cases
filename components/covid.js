@@ -5,4 +5,5 @@ class CovidStats {
   constructor(statsElement) {
     this.statsElement = statsElement;
   }
+
 }
