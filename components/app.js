@@ -323,7 +323,6 @@ class App {
     this.stateList.onStateClick(this.getStateData);
     this.geoChart.onStateClick(this.getStateData);
     this.getCovidStats();
-    this.stateList.renderStates(this.states);
   }
   getCovidStats(){
     $.ajax({
@@ -341,6 +340,7 @@ class App {
     this.covidData = data;
     this.geoChart.loadGoogleChart(this.states, this.covidData);
     this.covidStats.renderStats(this.covidData);
+    this.stateList.renderStatesList(this.states, this.covidData);
   }
   handleGetCovidStatsError(error){
     console.error(error);
@@ -350,6 +350,11 @@ class App {
       if (this.states[keys]["name"] === state) {
         var stateCode = keys;
       }
+    }
+
+    if (this.states[stateCode].hasOwnProperty('data')){
+      //METHOD repaint state map with markers
+      return; //avoid ajax call
     }
 
 
@@ -364,10 +369,13 @@ class App {
       .done(this.handleGetStateDataSuccess)
       .fail(this.handleGetStateDataError);
   }
+
+
   handleGetStateDataSuccess(data){
     var stateCode = data.location.isoCode;
     this.states[stateCode].data = data;
 
+    //METHOD repaint state map with markers
 
   }
   handleGetStateDataError(error){
