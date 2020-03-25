@@ -12,6 +12,14 @@ class StateList {
       listItem.className = 'list-group-item list-group-item-action';
       listItem.textContent = states[state];
 
+      listItem.addEventListener('click', function(){
+        var prevActive = document.querySelector('.active');
+        if (prevActive !== null){
+          prevActive.classList.remove('active');
+        }
+        event.target.classList.add('active');
+      });
+
       this.list.appendChild(listItem);
     }
   }
