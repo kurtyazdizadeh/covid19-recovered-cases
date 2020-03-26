@@ -57,6 +57,7 @@ class GeoChart {
     var array = [
       ['Latitude', 'Longitude', 'County', 'People Recovered'],
     ];
+    var totalStateRecovered = stateData.stats.totalRecoveredCases;
 
     for (var i = 0; i < stateData.stats.breakdowns.length; i++){
       var index = stateData.stats.breakdowns[i];
@@ -67,16 +68,17 @@ class GeoChart {
 
       if (peopleRecovered > 0){
         array.push([latitude, longitude, county+" County", peopleRecovered]);
+        totalStateRecovered -= peopleRecovered;
       }
     }
 
-    if (array.length < 2){
-      array.push(
+    if (totalStateRecovered > 0 || stateData.stats.totalRecoveredCases === 0 ){
+    array.push(
         [
           stateData.location.lat,
           stateData.location.long,
           stateData.location.provinceOrState,
-          stateData.stats.totalRecoveredCases
+          totalStateRecovered
         ]
       );
     }
