@@ -27,12 +27,64 @@
   right: 1%;
 }
 
+
+/* iPhone 6/7/8 Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+    .title {
+      font-size: 1rem;
+    }
+    .list-title {
+      font-size: .75rem;
+    }
+    button {
+      font-size: .60rem;
+    }
+    aside.col-2 {
+      padding-right: 0px;
+    }
+    .state-list {
+      height: 230px;
+    }
+    .list-group-item {
+      padding: 12px 0px 12px 10px;
+    }
+    .badge-success {
+      margin-right: 5px;
+    }
+    .stats {
+      font-size: .5rem;
+    }
+  }
+
+/* iPad Landscape */
 @media only screen
   and (min-device-width:768px)
   and (max-device-width: 1024px)
   and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 2) {
-      .state-list {
-        height: 435px;
-      }
+    /* .title {
+      font-size: 1rem;
+    } */
+    .list-title {
+      font-size: 1.2rem;
+    }
+    button {
+      font-size: .9rem;
+    }
+    aside.col-2 {
+      padding-right: 0px;
+    }
+    .state-list {
+      height: 500px;
+    }
+    .list-group-item {
+      padding: 12px 0px 12px 10px;
+    }
+    .badge-success {
+      margin-right: 5px;
+    }
   }
