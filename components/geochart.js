@@ -15,7 +15,7 @@ class GeoChart {
     });
   }
   drawMap(states, covidData) {
-    var stateArray = [ ['State', 'Persons Recovered'] ];
+    var arrOfStates = [ ['State', 'Persons Recovered'] ];
 
     for (var state in states){
       for(var i = 0; i < covidData.stats.breakdowns.length; i++){
@@ -23,12 +23,12 @@ class GeoChart {
           state === covidData.stats.breakdowns[i].location.isoCode ||
           states[state].name === covidData.stats.breakdowns[i].location.provinceOrState
         ) {
-            stateArray.push([states[state].name, covidData.stats.breakdowns[i].totalRecoveredCases])
+            arrOfStates.push([states[state].name, covidData.stats.breakdowns[i].totalRecoveredCases])
           }
       }
     }
 
-    var chartData = google.visualization.arrayToDataTable(stateArray);
+    var chartData = google.visualization.arrayToDataTable(arrOfStates);
     var options = {
       region: 'US',
       resolution: 'provinces',
@@ -54,7 +54,7 @@ class GeoChart {
     this.getStateData = getStateData;
   }
   drawStateMap(stateData) {
-    var array = [
+    var arrOfCounties = [
       ['Latitude', 'Longitude', 'County', 'People Recovered'],
     ];
     var totalStateRecovered = stateData.stats.totalRecoveredCases;
@@ -67,13 +67,14 @@ class GeoChart {
       var peopleRecovered = index.totalRecoveredCases;
 
       if (peopleRecovered > 0){
-        array.push([latitude, longitude, county+" County", peopleRecovered]);
+        arrOfCounties.push([latitude, longitude, county+" County", peopleRecovered]);
         totalStateRecovered -= peopleRecovered;
       }
     }
 
-    if (totalStateRecovered > 0 || stateData.stats.totalRecoveredCases === 0 ){
-    array.push(
+    //if not enough county data exists, resort to using state name and general lat/long for state
+    if (totalStateRecovered > 0 || stateData.stats.totalRecoveredCases === 0){
+    arrOfCounties.push(
         [
           stateData.location.lat,
           stateData.location.long,
@@ -83,7 +84,7 @@ class GeoChart {
       );
     }
 
-    var chartData = google.visualization.arrayToDataTable(array);
+    var chartData = google.visualization.arrayToDataTable(arrOfCounties);
     var options = {
       region: stateData.location.isoCode,
       resolution: 'provinces',
