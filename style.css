@@ -35,10 +35,11 @@
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
     .title {
-      font-size: 1rem;
+      font-size: 1.35rem;
     }
     .map {
       height: 250px;
+      margin-left: 10px;
     }
     .list-title {
       font-size: .75rem;
@@ -46,8 +47,12 @@
     button {
       font-size: .60rem;
     }
+    .back-button {
+      font-size: .75rem;
+    }
     aside.col-2 {
       padding-right: 0px;
+      margin-right: 10px;
     }
     .state-list {
       height: 230px;
@@ -63,6 +68,25 @@
     }
   }
 
+/* iPhone 6/7/8 Portrait */
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px)
+and (orientation : portrait) {
+  .title {
+    font-size: 1.25rem;
+  }
+  aside {
+    display: none;
+  }
+  .stats {
+    font-size: .5rem;
+  }
+  .back-button {
+    font-size: .25rem;
+  }
+}
+
 /* iPad Landscape */
 @media only screen
   and (min-device-width:768px)
@@ -71,6 +95,7 @@
   and (-webkit-min-device-pixel-ratio: 2) {
     .map {
       height: 530px;
+      margin-left: 25px;
     }
     .list-title {
       font-size: 1.2rem;
@@ -80,6 +105,7 @@
     }
     aside.col-2 {
       padding-right: 0px;
+      margin-right: 25px;
     }
     .state-list {
       height: 500px;
@@ -89,5 +115,20 @@
     }
     .badge-success {
       margin-right: 5px;
+    }
+  }
+
+  /* iPad Portrait */
+  @media only screen
+  and ( min-device-width:768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .map {
+      height: 600px;
+      margin: 0 25px;
+    }
+    aside {
+      display: none;
     }
   }
