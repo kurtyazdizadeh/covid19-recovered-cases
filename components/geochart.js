@@ -5,35 +5,101 @@ class GeoChart {
     this.drawMap = this.drawMap.bind(this);
 
     this.mapElement = mapElement;
+    this.getStateData = null;
+    this.countryMap = null;
   }
-  loadGoogleChart(states, data) {
-    google.charts.load('current', { packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
+  loadGoogleChart(states, covidData) {
+    google.charts.load('current', {packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
     google.charts.setOnLoadCallback(() => {
-      this.drawMap(states, data)
+      this.drawMap(states, covidData)
     });
   }
-  drawMap(states, data) {
-    var stateArray = [
-      ['State', 'Persons Recovered']
-    ]
+  drawMap(states, covidData) {
+    var stateArray = [ ['State', 'Persons Recovered'] ];
 
     for (var state in states){
-      for(var i = 0; i < data.stats.breakdowns.length; i++){
+      for(var i = 0; i < covidData.stats.breakdowns.length; i++){
         if (
-          state === data.stats.breakdowns[i].location.isoCode ||
-          states[state] === data.stats.breakdowns[i].location.provinceOrState
+          state === covidData.stats.breakdowns[i].location.isoCode ||
+          states[state].name === covidData.stats.breakdowns[i].location.provinceOrState
         ) {
-          stateArray.push([states[state], data.stats.breakdowns[i].totalRecoveredCases])
+            stateArray.push([states[state].name, covidData.stats.breakdowns[i].totalRecoveredCases])
           }
       }
     }
 
-    var data = google.visualization.arrayToDataTable(stateArray);
+    var chartData = google.visualization.arrayToDataTable(stateArray);
     var options = {
       region: 'US',
-      resolution: 'provinces' //metros does counties
+      resolution: 'provinces',
+      enableRegionInteractivity: true
     };
+
     var chart = new google.visualization.GeoChart(document.getElementById('map'));
-    chart.draw(data, options);
+    chart.draw(chartData, options);
+
+    //event listener to grab the name of the state user clicks on the chart
+    google.visualization.events.addListener(chart, 'select', () => {
+      var selection = chart.getSelection();
+      var state = "";
+      if (selection.length > 0) {
+        state = chartData.getValue(selection[0].row,0)
+        this.getStateData(state);
+      }
+    })
+
+    this.countryMap = this.mapElement.innerHTML;
+  }
+  onStateClick(getStateData){
+    this.getStateData = getStateData;
+  }
+  drawStateMap(stateData) {
+    var array = [
+      ['Latitude', 'Longitude', 'County', 'People Recovered'],
+    ];
+
+    for (var i = 0; i < stateData.stats.breakdowns.length; i++){
+      var index = stateData.stats.breakdowns[i];
+      var longitude = index.location.long;
+      var latitude = index.location.lat;
+      var county = index.location.county;
+      var peopleRecovered = index.totalRecoveredCases;
+
+      if (peopleRecovered > 0){
+        array.push([latitude, longitude, county+" County", peopleRecovered]);
+      }
+    }
+
+    if (array.length < 2){
+      array.push(
+        [
+          stateData.location.lat,
+          stateData.location.long,
+          stateData.location.provinceOrState,
+          stateData.stats.totalRecoveredCases
+        ]
+      );
+    }
+
+    var chartData = google.visualization.arrayToDataTable(array);
+    var options = {
+      region: stateData.location.isoCode,
+      resolution: 'provinces',
+      displayMode: 'markers'
+    }
+
+    var mapEl = document.getElementById('map');
+    var chart = new google.visualization.GeoChart(mapEl);
+    chart.draw(chartData, options);
+
+    var backButton = document.createElement('button');
+    backButton.textContent = "Back to US Map";
+    backButton.className = "btn btn-danger position-absolute back-button";
+    backButton.addEventListener('click', this.returnToCountryMap);
+
+    mapEl.appendChild(backButton);
+  }
+  onBackClick(returnToCountryMap){
+    this.returnToCountryMap = returnToCountryMap;
   }
 }
