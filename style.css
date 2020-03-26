@@ -37,6 +37,9 @@
     .title {
       font-size: 1rem;
     }
+    .map {
+      height: 250px;
+    }
     .list-title {
       font-size: .75rem;
     }
@@ -66,9 +69,9 @@
   and (max-device-width: 1024px)
   and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 2) {
-    /* .title {
-      font-size: 1rem;
-    } */
+    .map {
+      height: 530px;
+    }
     .list-title {
       font-size: 1.2rem;
     }
