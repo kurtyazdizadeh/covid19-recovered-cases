@@ -133,5 +133,7 @@ class App {
   returnToCountryMap(){
     this.geoChart.mapElement.innerHTML = "";
     this.geoChart.drawMap(this.states, this.covidData);
+    this.covidStats.renderStats(this.covidData);
+
   }
 }
