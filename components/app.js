@@ -66,12 +66,21 @@ class App {
     }
 
     this.covidData = null;
+    this.currentMapData = null;
   }
   start() {
     this.stateList.onStateClick(this.getStateData);
     this.geoChart.onStateClick(this.getStateData);
     this.geoChart.onBackClick(this.returnToCountryMap);
     this.getCovidStats();
+    window.addEventListener('resize', () => {
+      if (this.currentMapData === 'Country'){
+        this.returnToCountryMap();
+      } else {
+        this.geoChart.drawStateMap(this.currentMapData);
+        this.covidStats.renderStats(this.currentMapData);
+      }
+    });
   }
   getCovidStats(){
     $.ajax({
@@ -88,6 +97,7 @@ class App {
   handleGetCovidStatsSuccess(data){
     this.covidData = data;
     this.geoChart.loadGoogleChart(this.states, this.covidData);
+    this.currentMapData = 'Country';
     this.covidStats.renderStats(this.covidData);
     this.stateList.renderStatesList(this.states, this.covidData);
   }
@@ -103,6 +113,7 @@ class App {
 
     if (this.states[stateCode].hasOwnProperty('data')){
       this.geoChart.drawStateMap(this.states[stateCode].data);
+      this.currentMapData = this.states[stateCode].data;
       this.covidStats.renderStats(this.states[stateCode].data);
       return; //avoid ajax call
     }
@@ -124,6 +135,7 @@ class App {
     this.states[stateCode].data = data;
 
     this.geoChart.drawStateMap(this.states[stateCode].data);
+    this.currentMapData = this.states[stateCode].data;
     this.covidStats.renderStats(this.states[stateCode].data);
   }
   handleGetStateDataError(error){
@@ -133,6 +145,7 @@ class App {
   returnToCountryMap(){
     this.geoChart.mapElement.innerHTML = "";
     this.geoChart.drawMap(this.states, this.covidData);
+    this.currentMapData = 'Country';
     this.covidStats.renderStats(this.covidData);
   }
 }
