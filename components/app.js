@@ -6,6 +6,7 @@ class App {
     this.handleGetStateDataError = this.handleGetStateDataError.bind(this);
     this.handleGetStateDataSuccess = this.handleGetStateDataSuccess.bind(this);
     this.getStateData = this.getStateData.bind(this);
+    this.returnToCountryMap = this.returnToCountryMap.bind(this);
 
     this.geoChart = geoChart;
     this.stateList = stateList;
@@ -69,6 +70,7 @@ class App {
   start() {
     this.stateList.onStateClick(this.getStateData);
     this.geoChart.onStateClick(this.getStateData);
+    this.geoChart.onBackClick(this.returnToCountryMap);
     this.getCovidStats();
   }
   getCovidStats(){
@@ -105,7 +107,6 @@ class App {
       return; //avoid ajax call
     }
 
-
     $.ajax({
       method: "GET",
       url: "https://api.smartable.ai/coronavirus/stats/"+stateCode,
@@ -118,16 +119,19 @@ class App {
       .fail(this.handleGetStateDataError);
   }
 
-
   handleGetStateDataSuccess(data){
     var stateCode = data.location.isoCode;
     this.states[stateCode].data = data;
 
-    //METHOD repaint state map with markers
     this.geoChart.drawStateMap(this.states[stateCode].data);
     this.covidStats.renderStats(this.states[stateCode].data);
   }
   handleGetStateDataError(error){
     console.error(error);
+  }
+
+  returnToCountryMap(){
+    this.geoChart.mapElement.innerHTML = "";
+    this.geoChart.drawMap(this.states, this.covidData);
   }
 }

@@ -6,10 +6,10 @@ class GeoChart {
 
     this.mapElement = mapElement;
     this.getStateData = null;
-    this.chart = null;
+    this.countryMap = null;
   }
   loadGoogleChart(states, covidData) {
-    google.charts.load('current', { packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
+    google.charts.load('current', {packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
     google.charts.setOnLoadCallback(() => {
       this.drawMap(states, covidData)
     });
@@ -34,18 +34,21 @@ class GeoChart {
       resolution: 'provinces',
       enableRegionInteractivity: true
     };
-    this.chart = new google.visualization.GeoChart(document.getElementById('map'));
-    this.chart.draw(chartData, options);
+
+    var chart = new google.visualization.GeoChart(document.getElementById('map'));
+    chart.draw(chartData, options);
 
     //event listener to grab the name of the state user clicks on the chart
-    google.visualization.events.addListener(this.chart, 'select', () => {
-      var selection = this.chart.getSelection();
+    google.visualization.events.addListener(chart, 'select', () => {
+      var selection = chart.getSelection();
       var state = "";
       if (selection.length > 0) {
         state = chartData.getValue(selection[0].row,0)
         this.getStateData(state);
       }
     })
+
+    this.countryMap = this.mapElement.innerHTML;
   }
   onStateClick(getStateData){
     this.getStateData = getStateData;
@@ -78,8 +81,6 @@ class GeoChart {
       );
     }
 
-    console.log(array);
-
     var chartData = google.visualization.arrayToDataTable(array);
     var options = {
       region: stateData.location.isoCode,
@@ -94,8 +95,11 @@ class GeoChart {
     var backButton = document.createElement('button');
     backButton.textContent = "Back to US Map";
     backButton.className = "btn btn-danger position-absolute back-button";
+    backButton.addEventListener('click', this.returnToCountryMap);
 
     mapEl.appendChild(backButton);
-
+  }
+  onBackClick(returnToCountryMap){
+    this.returnToCountryMap = returnToCountryMap;
   }
 }
