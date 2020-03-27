@@ -111,7 +111,7 @@ class App {
       }
     }
 
-    if (this.states[stateCode].hasOwnProperty('data')){
+    if (this.states[stateCode].data){
       this.geoChart.drawStateMap(this.states[stateCode].data);
       this.currentMapData = this.states[stateCode].data;
       this.covidStats.renderStats(this.states[stateCode].data);

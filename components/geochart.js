@@ -1,5 +1,3 @@
-var googleMaps_APIKey = 'AIzaSyDhYugfpMscV09jwbTry1YKDUNGhtfh9PI';
-
 class GeoChart {
   constructor(mapElement) {
     this.drawMap = this.drawMap.bind(this);
@@ -35,7 +33,7 @@ class GeoChart {
       enableRegionInteractivity: true
     };
 
-    var chart = new google.visualization.GeoChart(document.getElementById('map'));
+    var chart = new google.visualization.GeoChart(this.mapElement);
     chart.draw(chartData, options);
 
     //event listener to grab the name of the state user clicks on the chart
