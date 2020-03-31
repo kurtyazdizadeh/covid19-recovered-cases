@@ -1,4 +1,4 @@
-# COVID19 Recovered Cases Tracker
+# COVID-19 Recovered Cases Tracker
 
 A web application using [Google GeoCharts](https://developers.google.com/chart/interactive/docs/gallery/geochart) and the [Coronavirus Smartable API](https://developer.smartable.ai/api-details#api=coronavirus&operation=stats) to display cases of patients who have recovered from COVID-19 in the United States.
 
