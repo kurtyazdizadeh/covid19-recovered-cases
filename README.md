@@ -8,9 +8,9 @@ A web application using [Google GeoCharts](https://developers.google.com/chart/i
 - Displays recently recovered cases and total cases for the region displayed on the map.
 - List view will show a badge for recently recovered cases per state (if available).
 - Clicking on a state (or choosing from the list, if available) loads a more detailed view of that states data, showing recovered cases per county (if recorded), otherwise will show unknown locations as a general recovery for that state.
-- **Mobile Responsive:** will work in *portrait* and *landscape* mode for iPhone 6/7/8 and iPad
+- **Mobile Responsive:** will work in *portrait* and *landscape* mode for **iPhone 6/7/8** and **iPad**
 
-#### Screenshots
+### Screenshots
 ###### iPad Landscape
 ![ipad-landscape](/images/ipad-ls.png)
 ![ipad-landscape-detailed](/images/ipad-ls-state.png)
