@@ -15,13 +15,15 @@ class GeoChart {
   drawMap(states, covidData) {
     var arrOfStates = [ ['State', 'Persons Recovered'] ];
 
-    for (var state in states){
-      for(var i = 0; i < covidData.stats.breakdowns.length; i++){
+    var { breakdowns } = covidData.stats;
+
+    for (var state in states) {
+      for(var i = 0; i < breakdowns.length; i++){
         if (
-          state === covidData.stats.breakdowns[i].location.isoCode ||
-          states[state].name === covidData.stats.breakdowns[i].location.provinceOrState
+          state === breakdowns[i].location.isoCode ||
+          states[state].name === breakdowns[i].location.provinceOrState
         ) {
-            arrOfStates.push([states[state].name, covidData.stats.breakdowns[i].totalRecoveredCases])
+            arrOfStates.push([states[state].name, breakdowns[i].totalRecoveredCases])
           }
       }
     }
@@ -57,15 +59,19 @@ class GeoChart {
     ];
     var totalStateRecovered = stateData.stats.totalRecoveredCases;
 
-    for (var i = 0; i < stateData.stats.breakdowns.length; i++){
-      var index = stateData.stats.breakdowns[i];
-      var longitude = index.location.long;
-      var latitude = index.location.lat;
-      var county = index.location.county;
+    var { breakdowns } = stateData.stats
+
+    for (var i = 0; i < breakdowns.length; i++){
+      var index = breakdowns[i];
+      var { long, lat, county } = index.location;
+
+      var longitude = long;
+      var latitude = lat;
+      var _county = county;
       var peopleRecovered = index.totalRecoveredCases;
 
       if (peopleRecovered > 0){
-        arrOfCounties.push([latitude, longitude, county+" County", peopleRecovered]);
+        arrOfCounties.push([latitude, longitude, _county+" County", peopleRecovered]);
         totalStateRecovered -= peopleRecovered;
       }
     }
