@@ -15,12 +15,14 @@ class StateList {
       var badge = document.createElement('span');
       badge.className = 'badge badge-success badge-pill';
 
-      for (var i = 0; i < covidData.stats.breakdowns.length; i++){
-        if (states[state].name === covidData.stats.breakdowns[i].location.proviceOrState ||
-            state === covidData.stats.breakdowns[i].location.isoCode
+      var { breakdowns } = covidData.stats;
+
+      for (var i = 0; i < breakdowns.length; i++){
+        if (states[state].name === breakdowns[i].location.proviceOrState ||
+            state === breakdowns[i].location.isoCode
         ) {
-          if (covidData.stats.breakdowns[i].newlyRecoveredCases > 0)
-          badge.textContent = covidData.stats.breakdowns[i].newlyRecoveredCases;
+          if (breakdowns[i].newlyRecoveredCases > 0)
+          badge.textContent = breakdowns[i].newlyRecoveredCases;
         }
       }
       listItem.appendChild(badge);

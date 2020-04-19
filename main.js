@@ -1,7 +1,6 @@
-var mapEl = document.querySelector('#map');
-var stateListEl = document.querySelector('#stateList');
-var statsEl = document.querySelector('#stats');
-// if you are selecting an id, just use getElementById
+var mapEl = document.getElementById('map');
+var stateListEl = document.getElementById('stateList');
+var statsEl = document.getElementById('stats');
 
 var geoChart = new GeoChart(mapEl);
 var stateList = new StateList(stateListEl);
