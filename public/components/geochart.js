@@ -7,7 +7,7 @@ class GeoChart {
     this.countryMap = null;
   }
   loadGoogleChart(states, covidData) {
-    google.charts.load('current', {packages: ['geochart'], 'mapsApiKey': googleMaps_APIKey});
+    google.charts.load('current', { packages: ['geochart'], 'mapsApiKey': 'AIzaSyDhYugfpMscV09jwbTry1YKDUNGhtfh9PI'});
     google.charts.setOnLoadCallback(() => {
       this.drawMap(states, covidData)
     });
@@ -38,7 +38,7 @@ class GeoChart {
     var chart = new google.visualization.GeoChart(this.mapElement);
     chart.draw(chartData, options);
 
-    //event listener to grab the name of the state user clicks on the chart
+
     google.visualization.events.addListener(chart, 'select', () => {
       var selection = chart.getSelection();
       var state = "";
@@ -76,7 +76,6 @@ class GeoChart {
       }
     }
 
-    //if not enough county data exists, resort to using state name and general lat/long for state
     if (totalStateRecovered > 0 || stateData.stats.totalRecoveredCases === 0){
     arrOfCounties.push(
         [
