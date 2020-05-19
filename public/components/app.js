@@ -85,14 +85,11 @@ class App {
   getCovidStats(){
     $.ajax({
       method: "GET",
-      url: "https://api.smartable.ai/coronavirus/stats/US",
-      beforeSend: function(xhrObj) {
-        xhrObj.setRequestHeader("Cache-Control", "no-cache");
-        xhrObj.setRequestHeader("Subscription-Key", covid19_APIKey);
-      },
+      url: "/api/covid-stats",
     })
       .done(this.handleGetCovidStatsSuccess)
       .fail(this.handleGetCovidStatsError);
+
   }
   handleGetCovidStatsSuccess(data){
     this.covidData = data;
@@ -115,7 +112,7 @@ class App {
       this.geoChart.drawStateMap(this.states[stateCode].data);
       this.currentMapData = this.states[stateCode].data;
       this.covidStats.renderStats(this.states[stateCode].data);
-      return; //avoid ajax call
+      return;
     }
 
     $.ajax({

@@ -1,1 +1,3 @@
 components/apikeys.js
+node_modules
+.env
