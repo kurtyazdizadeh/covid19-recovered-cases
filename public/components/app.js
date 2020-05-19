@@ -85,7 +85,7 @@ class App {
   getCovidStats(){
     $.ajax({
       method: "GET",
-      url: "/api/covid-stats",
+      url: "/api/covid-country/",
     })
       .done(this.handleGetCovidStatsSuccess)
       .fail(this.handleGetCovidStatsError);
@@ -105,6 +105,7 @@ class App {
     for (var key in this.states) {
       if (this.states[key]["name"] === state) {
         var stateCode = key;
+        var stateAbbreviation = stateCode.substring(3);
       }
     }
 
@@ -115,13 +116,10 @@ class App {
       return;
     }
 
+
     $.ajax({
       method: "GET",
-      url: "https://api.smartable.ai/coronavirus/stats/"+stateCode,
-      beforeSend: function (xhrObj) {
-        xhrObj.setRequestHeader("Cache-Control", "no-cache");
-        xhrObj.setRequestHeader("Subscription-Key", covid19_APIKey);
-      },
+      url: `/api/covid-state/${stateAbbreviation}`,
     })
       .done(this.handleGetStateDataSuccess)
       .fail(this.handleGetStateDataError);
