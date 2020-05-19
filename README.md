@@ -28,6 +28,7 @@ Try the application live at [https://covid19recoveredtracker.kurtyazdizadeh.com]
 
    ```shell
    git clone https://github.com/kurtyazdizadeh/covid19-recovered-cases
+   cd covid19-recovered-cases
    ```
 
 2. Install all dependencies with NPM.
