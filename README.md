@@ -3,6 +3,16 @@
 A web application using [Google GeoCharts](https://developers.google.com/chart/interactive/docs/gallery/geochart) and the [Coronavirus Smartable API](https://developer.smartable.ai/api-details#api=coronavirus&operation=stats) to display cases of patients who have recovered from COVID-19 in the United States.
 
 
+### Technologies Used
+
+- jQuery (AJAX)
+- Node.js
+- Express
+- Bootstrap 4
+- JavaScript (Object Oriented Programming)
+- HTML5
+- CSS3
+
 ### Live Demo
 
 Try the application live at [https://covid19recoveredtracker.kurtyazdizadeh.com](https://covid19recoveredtracker.kurtyazdizadeh.com)
