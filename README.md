@@ -46,7 +46,20 @@ Try the application live at [https://covid19recoveredtracker.kurtyazdizadeh.com]
     ```shell
     npm install
     ```
-3. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
+    
+3. Register for your own API keys here: [COVID-19 Smartable API](https://developer.smartable.ai/signup) and [Google Maps API](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+4. Create a ```.env``` file and insert your API keys following the template below:
+
+   ```shell
+   PORT=3001
+   DEV_SERVER_PORT=3000
+
+   covid19_APIKey=your_key_here
+   covid19_APIKey_secondary=your_secondary_key_here
+   ```
+
+4. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
 
     ```shell
     npm run dev
