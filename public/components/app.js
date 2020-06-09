@@ -102,9 +102,9 @@ class App {
     this.geoChart.mapElement.innerHTML = "";
 
     var errorContainer = document.createElement('div');
-    errorContainer.classList = "d-flex align-items-center justify-content-center text-danger h-100";
+    errorContainer.classList = "d-flex align-items-center justify-content-center text-center text-danger h-100";
     var errorMessage = document.createElement('h3');
-    errorMessage.textContent = "Error retrieving map data from API";
+    errorMessage.innerText = 'Error retrieving map data from API.\nPlease refresh the page and try again.';
     errorContainer.appendChild(errorMessage);
 
     this.geoChart.mapElement.appendChild(errorContainer);
@@ -145,9 +145,9 @@ class App {
   }
   handleGetStateDataError(error){
     var errorContainer = document.createElement('div');
-    errorContainer.classList = "d-flex align-items-center justify-content-center text-danger h-100";
+    errorContainer.classList = "d-flex align-items-center justify-content-center text-center text-danger h-100";
     var errorMessage = document.createElement('h3');
-    errorMessage.textContent = "Error retrieving state data from API";
+    errorMessage.innerText = "Error retrieving state data from API\nPlease refresh the page and try again.";
     errorContainer.appendChild(errorMessage);
 
     console.error(error);
