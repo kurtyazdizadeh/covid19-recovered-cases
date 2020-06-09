@@ -120,12 +120,24 @@ class App {
     }
 
     if (this.states[stateCode].data){
+      if (this.currentMapData !== 'Country') {
+        if (this.states[stateCode].data.location.isoCode === this.currentMapData.location.isoCode) return;
+      }
       this.geoChart.drawStateMap(this.states[stateCode].data);
       this.currentMapData = this.states[stateCode].data;
       this.covidStats.renderStats(this.states[stateCode].data);
       return;
     }
 
+
+    this.geoChart.mapElement.innerHTML = "";
+    var spinnerContainer = document.createElement('div');
+    spinnerContainer.classList = 'd-flex align-items-center justify-content-center h-100';
+    var spinner = document.createElement('div');
+    spinner.classList = 'spinner';
+
+    spinnerContainer.appendChild(spinner);
+    this.geoChart.mapElement.appendChild(spinnerContainer);
 
     $.ajax({
       method: "GET",
@@ -144,11 +156,15 @@ class App {
     this.covidStats.renderStats(this.states[stateCode].data);
   }
   handleGetStateDataError(error){
+    this.geoChart.mapElement.innerHTML = "";
+
     var errorContainer = document.createElement('div');
     errorContainer.classList = "d-flex align-items-center justify-content-center text-center text-danger h-100";
     var errorMessage = document.createElement('h3');
     errorMessage.innerText = "Error retrieving state data from API\nPlease refresh the page and try again.";
     errorContainer.appendChild(errorMessage);
+
+    this.geoChart.mapElement.appendChild(errorContainer);
 
     console.error(error);
   }

@@ -28,12 +28,12 @@ class StateList {
       listItem.appendChild(badge);
 
       listItem.addEventListener('click', () => {
+        if (event.target.classList.contains('active')) return;
+
         var prevActive = document.querySelector('.active');
         if (prevActive !== null){
           prevActive.classList.remove('active');
         }
-
-        if (event.target.classList.contains('active')) return;
 
         event.target.classList.add('active');
         this.getStateData(event.target.childNodes[0].wholeText);
