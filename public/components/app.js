@@ -99,6 +99,16 @@ class App {
     this.stateList.renderStatesList(this.states, this.covidData);
   }
   handleGetCovidStatsError(error){
+    this.geoChart.mapElement.innerHTML = "";
+
+    var errorContainer = document.createElement('div');
+    errorContainer.classList = "d-flex align-items-center justify-content-center text-center text-danger h-100";
+    var errorMessage = document.createElement('h3');
+    errorMessage.innerText = 'Error retrieving map data from API.\nPlease refresh the page and try again.';
+    errorContainer.appendChild(errorMessage);
+
+    this.geoChart.mapElement.appendChild(errorContainer);
+
     console.error(error);
   }
   getStateData(state){
@@ -134,6 +144,12 @@ class App {
     this.covidStats.renderStats(this.states[stateCode].data);
   }
   handleGetStateDataError(error){
+    var errorContainer = document.createElement('div');
+    errorContainer.classList = "d-flex align-items-center justify-content-center text-center text-danger h-100";
+    var errorMessage = document.createElement('h3');
+    errorMessage.innerText = "Error retrieving state data from API\nPlease refresh the page and try again.";
+    errorContainer.appendChild(errorMessage);
+
     console.error(error);
   }
 
