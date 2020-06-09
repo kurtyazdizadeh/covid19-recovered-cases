@@ -32,6 +32,9 @@ class StateList {
         if (prevActive !== null){
           prevActive.classList.remove('active');
         }
+
+        if (event.target.classList.contains('active')) return;
+
         event.target.classList.add('active');
         this.getStateData(event.target.childNodes[0].wholeText);
       })
